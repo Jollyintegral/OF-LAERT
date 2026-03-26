@@ -152,9 +152,9 @@ header a {
     box-sizing: border-box !important;
     word-break: break-word !important;
     overflow-wrap: break-word !important;
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
+    border: 1px solid #ddd !important;
+    border-radius: 6px !important;
+    background: #fefefe !important;
   }
   .spot-popup-view .spot-edit-name,
   .spot-popup-view .spot-edit-class,
@@ -289,9 +289,9 @@ header a {
   padding: 8px 8px;
   box-sizing: border-box;
   width: 100%;
-  border: none;
-  border-radius: 0;
-  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
 }
 .spot-popup-view .spot-desc img {
   max-width: 100%;
@@ -319,6 +319,11 @@ header a {
   padding: 0;
   box-shadow: none;
   min-width: 176px;
+}
+
+.leaflet-top.leaflet-left .coord-search-control {
+  margin-top: 0;
+  margin-left: 46px;
 }
 
 .coord-search-form {
