@@ -1,0 +1,301 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gate-box {
+  background: #333;
+  padding: 24px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 260px;
+}
+.gate-box h2 {
+  margin: 0 0 16px 0;
+  color: #fff;
+  font-size: 1.1em;
+}
+.gate-box input {
+  padding: 8px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.gate-box button {
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.gate-error {
+  margin: 10px 0 0 0;
+  color: #e66;
+  font-size: 13px;
+  display: none;
+}
+
+header {
+  background: #000000;
+  padding: 10px 20px;
+}
+
+header a {
+  color: white;
+  margin-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#map {
+  height: calc(100vh - 50px);
+}
+
+@media (max-width: 700px) {
+  header {
+    padding: 8px 6px;
+    font-size: 15px;
+  }
+  #addSpotBtn {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: 15px !important;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 100px;
+    max-width: 85vw;
+    font-size: 14px;
+    padding: 10px 18px;
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: visible;
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    border: 2px solid #222;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 1000 !important;
+  }
+  .gate-box {
+    min-width: 0;
+    width: 90vw;
+    padding: 12px;
+  }
+  .leaflet-popup-content-wrapper {
+    max-width: calc(90vw - 16px) !important;
+    width: calc(90vw - 16px) !important;
+    overflow-x: hidden !important;
+  }
+  .spot-popup-view {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .leaflet-popup-content {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  .spot-popup-view .spot-popup-title-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+  }
+  .spot-popup-view .spot-popup-title-row strong {
+    flex: 1 1 auto !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    font-size: 1.1em !important;
+    text-align: left !important;
+  }
+  .spot-popup-view .edit-spot-btn {
+    flex: 0 0 auto !important;
+    padding: 4px 8px !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    align-self: flex-start !important;
+  }
+  .spot-popup-view .spot-popup-title-row .spot-thumb {
+    flex: 0 0 auto !important;
+    width: 28px !important;
+    height: 28px !important;
+    margin: 0 !important;
+    align-self: flex-start !important;
+  }
+  .spot-popup-view .spot-desc {
+    width: 100% !important;
+    max-height: 50vh !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  .spot-popup-view .spot-edit-name,
+  .spot-popup-view .spot-edit-class,
+  .spot-popup-view .spot-edit-desc,
+  .spot-popup-view .save-edit-spot-btn,
+  .spot-popup-view .delete-edit-spot-btn {
+    width: 100% !important;
+    margin: 6px 0 !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+  }
+  .spot-popup-view .spot-edit-desc {
+    min-height: 60px !important;
+    border: 1px solid #ccc !important;
+    overflow-y: auto !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  .spot-popup-view .delete-edit-spot-btn {
+    background: #e66 !important;
+    color: #fff !important;
+    border: 1px solid #c00 !important;
+  }
+  .spot-popup-view .edit-status {
+    margin: 6px 0 !important;
+    font-size: 12px !important;
+  }
+  .image-overlay img {
+    max-width: 98vw;
+    max-height: 60vh;
+  }
+}
+
+#addSpotBtn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Spot popup: thick border, tight spacing, title centered */
+.leaflet-popup-content-wrapper {
+  border: 8px solid #000;
+}
+.leaflet-popup-content {
+  margin: 6px 10px;
+  min-width: 180px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+.spot-popup-view {
+  min-width: 200px;
+  padding: 4px 0;
+  max-width: 400px;
+}
+/* Spot popup title row with edit and delete */
+.spot-popup-view .spot-popup-title-row {
+  position: relative;
+  margin-bottom: 8px;
+  min-height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.spot-popup-view .edit-spot-btn {
+  position: static;
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  background: #e0e0e0;
+  border: 1px solid #aaa;
+  border-radius: 3px 0 0 3px;
+  margin: 0;
+  transform: none;
+  top: auto;
+  left: auto;
+  align-self: center;
+}
+.spot-popup-view .spot-popup-title-row strong {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 2px 0 0 0;
+  box-sizing: border-box;
+  font-size: 1em;
+  text-align: center;
+  vertical-align: middle;
+  white-space: normal;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.spot-popup-view .spot-popup-title-row .spot-thumb {
+  position: static;
+  flex: 0 0 auto;
+  margin: 0;
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  transform: none;
+  top: auto;
+  right: auto;
+  align-self: center;
+}
+.spot-popup-view .spot-desc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  max-height: 50vh;
+  overflow-y: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  white-space: normal;
+  padding: 0 4px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.spot-popup-view .spot-desc img {
+  max-width: 100%;
+}
+.image-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.image-overlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  pointer-events: none;
+}
