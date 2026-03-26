@@ -22,6 +22,69 @@ const SPOTS_COLLECTION = 'spots';
 let userRole = null;
 let map; // Global map variable
 
+function parseCoordinateInput(input) {
+  if (!input) return null;
+  const cleaned = input.trim().replace(/[()]/g, '');
+  if (!cleaned) return null;
+
+  const parts = cleaned.includes(',')
+    ? cleaned.split(',').map((p) => p.trim()).filter(Boolean)
+    : cleaned.split(/\s+/).map((p) => p.trim()).filter(Boolean);
+
+  if (parts.length !== 2) return null;
+
+  const lat = Number(parts[0]);
+  const lng = Number(parts[1]);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+
+  return { lat, lng };
+}
+
+function addCoordinateSearchControl() {
+  const coordControl = L.control({ position: 'topleft' });
+
+  coordControl.onAdd = function () {
+    const container = L.DomUtil.create('div', 'coord-search-control');
+    container.innerHTML = `
+      <form class="coord-search-form">
+        <input type="text" class="coord-search-input" placeholder="Search" aria-label="Search coordinates">
+        <button type="submit" class="coord-search-btn">Search</button>
+      </form>
+      <div class="coord-search-error" aria-live="polite"></div>
+    `;
+
+    const form = container.querySelector('.coord-search-form');
+    const input = container.querySelector('.coord-search-input');
+    const error = container.querySelector('.coord-search-error');
+
+    L.DomEvent.disableClickPropagation(container);
+    L.DomEvent.disableScrollPropagation(container);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const parsed = parseCoordinateInput(input.value);
+      if (!parsed) {
+        error.textContent = 'Use format: lat, lng';
+        return;
+      }
+      error.textContent = '';
+      map.flyTo([parsed.lat, parsed.lng], Math.max(map.getZoom(), 15), {
+        duration: 0.7
+      });
+    });
+
+    input.addEventListener('input', () => {
+      if (error.textContent) error.textContent = '';
+    });
+
+    return container;
+  };
+
+  coordControl.addTo(map);
+}
+
 // Marker icon factory for different classes
 function getSpotIcon(spotClass) {
   let overlay = '';
@@ -152,6 +215,7 @@ function runMapApp() {
   L.control.layers(baseMaps, null, {
     position: 'topright'
   }).addTo(map);
+  addCoordinateSearchControl();
 
   // Add Street View control to map (plugin)
   if (window.L && typeof L.control.streetView === 'function') {
